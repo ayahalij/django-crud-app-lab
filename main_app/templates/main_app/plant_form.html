@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col s12">
+        <div class="card-panel green darken-2 white-text center-align">
+            {% if object %}
+                <h4><i class="material-icons left">edit</i>Edit Plant</h4>
+                <p>Update {{ object.name }}'s information</p>
+            {% else %}
+                <h4><i class="material-icons left">add</i>Add a New Plant</h4>
+                <p>Add a beautiful new plant to your collection</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="form-container">
+    <form action="" method="post">
+        {% csrf_token %}
+        
+        <div class="input-field">
+            <i class="material-icons prefix">local_florist</i>
+            {{ form.name }}
+            <label for="{{ form.name.id_for_label }}">Plant Name</label>
+        </div>
+        
+        <div class="input-field">
+            <i class="material-icons prefix">category</i>
+            {{ form.plant_type }}
+            <label for="{{ form.plant_type.id_for_label }}">Plant Type</label>
+        </div>
+        
+        <div class="input-field">
+            <i class="material-icons prefix">schedule</i>
+            {{ form.watering_frequency }}
+            <label for="{{ form.watering_frequency.id_for_label }}">Watering Frequency</label>
+        </div>
+        
+        <div class="input-field">
+            <i class="material-icons prefix">photo</i>
+            {{ form.image }}
+            <label for="{{ form.image.id_for_label }}">Image URL</label>
+            <span class="helper-text">Optional: Add a URL to a photo of your plant</span>
+        </div>
+        
+        <div class="input-field">
+            <i class="material-icons prefix">note</i>
+            {{ form.notes }}
+            <label for="{{ form.notes.id_for_label }}">Notes</label>
+            <span class="helper-text">Optional: Care instructions, observations, or memories</span>
+        </div>
+        
+        <div class="center-align" style="margin-top: 30px;">
+            <input type="submit" class="btn-large waves-effect waves-light green" value="{% if object %}Update Plant{% else %}Add Plant{% endif %}">
+            <a href="{% if object %}{% url 'plant_detail' object.id %}{% else %}{% url 'plants_index' %}{% endif %}" class="btn-large waves-effect waves-light grey">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize select elements
+        M.FormSelect.init(document.querySelectorAll('select'));
+        M.updateTextFields();
+    });
+</script>
+
+{% endblock %}
