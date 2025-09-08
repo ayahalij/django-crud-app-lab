@@ -3,6 +3,19 @@
 
 {% block content %}
 
+<div class="hero">
+    <div class="container">
+        <h1><i class="material-icons large">local_florist</i> Plant Collector</h1>
+        <p>Organize and track your beautiful plant collection</p>
+        {% if not user.is_authenticated %}
+        <div style="margin-top: 30px;">
+                <i class="material-icons left">person_add</i>Get Started
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
 <div class="row">
     <div class="col s12 m4">
         <div class="card">
