@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col s12 m6">
+        {% if plant.image %}
+            <img src="{{ plant.image }}" alt="{{ plant.name }}" class="detail-image">
+        {% else %}
+            <div class="detail-default-image">
+                <i class="material-icons">local_florist</i>
+            </div>
+        {% endif %}
+    </div>
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title">
+                    <h3>{{ plant.name }}</h3>
+                    <div class="plant-type-badge type-{{ plant.plant_type|lower }}">
+                        <i class="material-icons tiny">category</i>
+                        {{ plant.get_plant_type_display_custom }}
+                    </div>
+                </div>
+                
+                <div class="watering-info">
+                    <h6><i class="material-icons tiny">schedule</i> Watering Schedule</h6>
+                    <p><strong>{{ plant.get_watering_frequency_display_custom }}</strong></p>
+                </div>
+                
+                {% if plant.notes %}
+                <div class="plant-notes">
+                    <h6><i class="material-icons tiny">note</i> My Notes</h6>
+                    <p>{{ plant.notes }}</p>
+                </div>
+                {% endif %}
+                
+                <div class="grey-text">
+                    <p><i class="material-icons tiny">schedule</i> Added: {{ plant.created_at|date:"F d, Y \a\t g:i A" }}</p>
+                </div>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'plants_update' plant.id %}" class="btn waves-effect waves-light orange">
+                    <i class="material-icons left">edit</i>Edit
+                </a>
+                <a href="{% url 'plants_delete' plant.id %}" class="btn waves-effect waves-light red">
+                    <i class="material-icons left">delete</i>Delete
+                </a>
+                <a href="{% url 'plants_index' %}" class="btn waves-effect waves-light grey">
+                    <i class="material-icons left">arrow_back</i>Back to All Plants
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
