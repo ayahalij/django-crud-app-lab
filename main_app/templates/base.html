@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
     <header class="navbar-fixed">
@@ -19,11 +18,36 @@
                     <i class="material-icons">local_florist</i>Plant Collector
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{% url 'plants_index' %}">View All Plants</a></li>
-                    <li><a href="{% url 'plants_create' %}">Add a Plant</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'plants_index' %}">My Plants</a></li>
+                        <li><a href="{% url 'plants_create' %}">Add Plant</a></li>
+                        <li><a href="{% url 'all_care_logs' %}">All Care Activities</a></li>
+                        <li><a href="{% url 'logout' %}">Logout ({{ user.username }})</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                    {% endif %}
                 </ul>
+                
+                <!-- Mobile menu -->
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
+                </a>
             </div>
         </nav>
+        
+        <!-- Mobile Navigation -->
+        <ul class="sidenav" id="mobile-nav">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'plants_index' %}"><i class="material-icons">local_florist</i>My Plants</a></li>
+                <li><a href="{% url 'plants_create' %}"><i class="material-icons">add</i>Add Plant</a></li>
+                <li><a href="{% url 'all_care_logs' %}"><i class="material-icons">assignment</i>All Care Activities</a></li>
+                <li><a href="{% url 'logout' %}"><i class="material-icons">logout</i>Logout ({{ user.username }})</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}"><i class="material-icons">login</i>Login</a></li>
+                <li><a href="{% url 'signup' %}"><i class="material-icons">person_add</i>Sign Up</a></li>
+            {% endif %}
+        </ul>
     </header>
     
     <main class="container">
@@ -32,12 +56,19 @@
     </main>
     
     <footer class="page-footer green darken-2">
+        <div class="footer-copyright">
+            <div class="container center-align">
+                © 2025 Plant Collector
+            </div>
+        </div>
     </footer>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Materialize components
             M.AutoInit();
+            M.Sidenav.init(document.querySelectorAll('.sidenav'));
         });
     </script>
 </body>

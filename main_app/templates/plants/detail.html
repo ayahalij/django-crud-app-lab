@@ -40,14 +40,76 @@
             </div>
             <div class="card-action">
                 <a href="{% url 'plants_update' plant.id %}" class="btn waves-effect waves-light orange">
-                    <i class="material-icons left">edit</i>Edit
+                    <i class="material-icons left">edit</i>Edit Plant
                 </a>
                 <a href="{% url 'plants_delete' plant.id %}" class="btn waves-effect waves-light red">
-                    <i class="material-icons left">delete</i>Delete
+                    <i class="material-icons left">delete</i>Delete Plant
                 </a>
                 <a href="{% url 'plants_index' %}" class="btn waves-effect waves-light grey">
-                    <i class="material-icons left">arrow_back</i>Back to All Plants
+                    <i class="material-icons left">arrow_back</i>Back to Plants
                 </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Care Logs Section -->
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title">
+                    <h5><i class="material-icons left">assignment</i>Recent Care Activities</h5>
+                    <div class="right-align">
+                        <a href="{% url 'care_logs_create' plant.id %}" class="btn-floating btn-small waves-effect waves-light blue">
+                            <i class="material-icons">add</i>
+                        </a>
+                    </div>
+                </div>
+                
+                {% if care_logs %}
+                <div class="row">
+                    {% for care_log in care_logs %}
+                    <div class="col s12 m6">
+                        <div class="card-panel blue lighten-5">
+                            <div class="care-log-item">
+                                <div class="care-log-header">
+                                    <span class="care-activity-badge activity-{{ care_log.activity|lower }}">
+                                        {{ care_log.get_activity_display }}
+                                    </span>
+                                    <span class="care-date right">{{ care_log.date|date:"M d, Y" }}</span>
+                                </div>
+                                {% if care_log.notes %}
+                                <p class="care-notes">{{ care_log.notes }}</p>
+                                {% endif %}
+                                <div class="care-actions">
+                                    <a href="{% url 'care_logs_update' care_log.id %}" class="btn-small orange">
+                                        <i class="material-icons tiny">edit</i>
+                                    </a>
+                                    <a href="{% url 'care_logs_delete' care_log.id %}" class="btn-small red">
+                                        <i class="material-icons tiny">delete</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="center-align">
+                    <a href="{% url 'care_logs_index' plant.id %}" class="btn waves-effect waves-light blue">
+                        <i class="material-icons left">visibility</i>View All Care History
+                    </a>
+                </div>
+                
+                {% else %}
+                <div class="center-align">
+                    <p class="grey-text">No care activities recorded yet.</p>
+                    <a href="{% url 'care_logs_create' plant.id %}" class="btn waves-effect waves-light blue">
+                        <i class="material-icons left">add</i>Add First Care Log
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

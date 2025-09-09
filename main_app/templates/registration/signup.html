@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col s12">
+        <div class="card-panel blue darken-2 white-text center-align">
+            <h4><i class="material-icons left">person_add</i>Sign Up</h4>
+            <p>Join Plant Collector Today</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m6 offset-m3">
+        <div class="card">
+            <div class="card-content">
+                {% if error_message %}
+                <div class="card-panel red lighten-4 red-text text-darken-2">
+                    <i class="material-icons left">error</i>{{ error_message }}
+                </div>
+                {% endif %}
+                
+                <form method="POST" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.username }}
+                            <label for="{{ form.username.id_for_label }}">Username</label>
+                            {% if form.username.errors %}
+                                <span class="red-text">{{ form.username.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.password1 }}
+                            <label for="{{ form.password1.id_for_label }}">Password</label>
+                            {% if form.password1.errors %}
+                                <span class="red-text">{{ form.password1.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.password2 }}
+                            <label for="{{ form.password2.id_for_label }}">Password Confirmation</label>
+                            {% if form.password2.errors %}
+                                <span class="red-text">{{ form.password2.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="card-action center-align">
+                        <button type="submit" class="btn waves-effect waves-light blue">
+                            <i class="material-icons left">person_add</i>Sign Up
+                        </button>
+                        <a href="{% url 'home' %}" class="btn waves-effect waves-light grey">
+                            <i class="material-icons left">cancel</i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="center-align">
+            <p>Already have an account? <a href="{% url 'login' %}" class="blue-text">Login here</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
